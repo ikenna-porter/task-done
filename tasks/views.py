@@ -1,23 +1,53 @@
 from django.shortcuts import render, redirect
 from tasks.models import Task
+from projects.models import Project
 from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
+from tasks.forms import TaskForm
 
 
-class CreateTask(LoginRequiredMixin, CreateView):
-    model = Task
-    fields = ["name", "start_date", "due_date", "project", "assignee"]
-    template_name = "create_task.html"
+# class CreateTask(LoginRequiredMixin, CreateView):
+#     model = Task
+#     fields = [
+#         "name",
+#         "start_date",
+#         "due_date",
+#         "recurring",
+#         "frequency",
+#         "assignee",
+#         "project",
+#     ]
+#     template_name = "create_task.html"
 
-    def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-            return redirect("show_project", pk=self.request.user.id)
+#     def form_valid(self, form):
+#         if form.is_valid():
+#             print("valid")
+#             form.save()
+#             return redirect("show_project", pk=self.request.user.id)
+#         else:
+#             print("not valid")
 
-    def get_success_url(self):
-        return reverse_lazy("show_project", args=self.object.id)
+#     def get_success_url(self):
+#         return reverse_lazy("show_project", args=self.object.id)
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context["tasks"] = Task.objects.filter(assignee=self.request.user.id)
+#         context["assignee"] = self.request.user
+#         context["projects"] = Project.objects.filter(
+#             members=self.request.user.id
+#         )
+
+#         return context
+
+
+@login_required
+def create_task(request):
+    if request.method == "GET":
+        form = TaskForm()
+    return render(request, "create_task.html", {"form": form})
 
 
 @login_required

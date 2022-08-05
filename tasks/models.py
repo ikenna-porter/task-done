@@ -8,6 +8,8 @@ class Task(models.Model):
     start_date = models.DateTimeField()
     due_date = models.DateTimeField()
     is_completed = models.BooleanField(default=False)
+    recurring = models.BooleanField(default=False, null=True, blank=True)
+    frequency = models.DurationField(null=True, blank=True)
     project = models.ForeignKey(
         Project, related_name="tasks", on_delete=models.CASCADE
     )
