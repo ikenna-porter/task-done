@@ -5,29 +5,26 @@
             <h1>Create a new task</h1>
             <form method="post">
                 {% csrf_token %}
-                {% comment %} {% for field in form %}
+                {{form.as_p}}
 
-                   {{field.label_tag}}{{field}} 
-                   <br><br>
-                {% endfor %} {% endcomment %}
-                <label for="name">Name</label>
-                <input name= "name" type="text">
+                {% comment %} <label for="name">Name</label>
+                <input name="name" type="text" id="name">
                 <br>
                 <br>
                 <label for="start_date">Start Date</label>
-                <input name="start_date" type="datetime-local">
+                <input name="start_date" type="datetime-local" id="start_date">
                 <br>
                 <br>
                 <label for="due_date">Due Date</label>
-                <input name="due_date" type="datetime-local">
+                <input name="due_date" type="datetime-local" id="due_date">
                 <br>
                 <br>
                 <label for="recurring">Recurring Task</label>
-                <input name="recurring" type="checkbox">
+                <input name="recurring" type="checkbox" id="recurring">
                 <br>
                 <br>
                 <label for="frequency">Frequency of Recurrence</label>
-                <select name="frequency" id="frequency">
+                <select name="frequency" id="frequency" id="frequency">
                     <option value="hourly">
                         Hourly
                     </option>
@@ -56,8 +53,8 @@
                 </select>
                 <br>
                 <br>
-                <input type="hidden" name="assignee" value={{assignee}}>
-                <button type="submit">Create</button>
+                <input type="hidden" name="assignee" value={{assignee}} id="assignee"> {% endcomment %}
+                <button type="submit">Create</button> 
             </form>
         </div>
     </main>

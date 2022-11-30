@@ -9,7 +9,17 @@ class Task(models.Model):
     due_date = models.DateTimeField()
     is_completed = models.BooleanField(default=False)
     recurring = models.BooleanField(default=False, null=True, blank=True)
-    frequency = models.DurationField(null=True, blank=True)
+    frequency = models.DurationField(
+        null=True,
+        blank=True,
+        choices=[
+            (3600, "hourly"),
+            (86400, "daily"),
+            (604800, "weekly"),
+            (18144000, "monthly"),
+            (217728000, "yearly"),
+        ],
+    )
     project = models.ForeignKey(
         Project, related_name="tasks", on_delete=models.CASCADE
     )
