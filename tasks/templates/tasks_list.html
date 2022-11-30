@@ -1,5 +1,4 @@
 {% extends 'tasks_base.html' %}
-
 {% block content %}
     <main>
         <div>
@@ -12,15 +11,16 @@
                             <th>State date</th>
                             <th>End date</th>
                             <th>Is completed</th>
+                            <th>Recurring Task</th>
+                            <th>Recurrence Frequency</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         {% for task in tasks.all %}
                             <tr>
-                                <td>{{ task.name}}</td>
-                                <td>{{ task.start_date}}</td>
-                                <td>{{ task.end_date}}</td>
+                                <td>{{ task.name }}</td>
+                                <td>{{ task.start_date }}</td>
+                                <td>{{ task.end_date }}</td>
                                 <td>
                                     {% if task.is_completed %}
                                         Done
@@ -32,6 +32,33 @@
                                         </form>
                                     {% endif %}
                                 </td>
+                                <td>{{ task.recurring }}</td>
+                                {% if task.recurring %}
+                                    <td>
+                                        <form method="post" action="{% url 'complete_task' task.id %}">
+                                            {% csrf_token %}
+                                            <select name="frequency" id="frequency">
+                                                <option value="hourly">
+                                                    Hourly
+                                                </option>
+                                                <option value="daily">
+                                                    Daily
+                                                </option>
+                                                <option value="weekly">
+                                                    Weekly
+                                                </option>
+                                                <option value="monthly">
+                                                    Monthly
+                                                </option>
+                                                <option value="yearly">
+                                                    Yearly
+                                                </option>
+                                            </select>
+                                        </form>
+                                    </td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>

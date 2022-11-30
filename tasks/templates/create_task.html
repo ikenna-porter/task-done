@@ -1,5 +1,4 @@
 {% extends 'tasks_base.html' %}
-
 {% block content %}
     <main>
         <div>
@@ -7,7 +6,55 @@
             <form method="post">
                 {% csrf_token %}
                 {{form.as_p}}
-                <button type="submit">Create</button>
+
+                {% comment %} <label for="name">Name</label>
+                <input name="name" type="text" id="name">
+                <br>
+                <br>
+                <label for="start_date">Start Date</label>
+                <input name="start_date" type="datetime-local" id="start_date">
+                <br>
+                <br>
+                <label for="due_date">Due Date</label>
+                <input name="due_date" type="datetime-local" id="due_date">
+                <br>
+                <br>
+                <label for="recurring">Recurring Task</label>
+                <input name="recurring" type="checkbox" id="recurring">
+                <br>
+                <br>
+                <label for="frequency">Frequency of Recurrence</label>
+                <select name="frequency" id="frequency" id="frequency">
+                    <option value="hourly">
+                        Hourly
+                    </option>
+                    <option value="daily">
+                        Daily
+                    </option>
+                    <option value="weekly">
+                        Weekly
+                    </option>
+                    <option value="monthly">
+                        Monthly
+                    </option>
+                    <option value="yearly">
+                        Yearly
+                    </option>
+                </select>
+                <br>
+                <br>
+                <label for="project">Project</label>
+                <select name="project" id="project">
+                    {% for project in projects %}
+                        <option value="{{ project.name}}">
+                            {{ project.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <br>
+                <br>
+                <input type="hidden" name="assignee" value={{assignee}} id="assignee"> {% endcomment %}
+                <button type="submit">Create</button> 
             </form>
         </div>
     </main>
